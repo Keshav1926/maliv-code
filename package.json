@@ -1,0 +1,46 @@
+{
+  "name": "maliv-code",
+  "version": "0.1.0",
+  "description": "A control layer for opencode: one-command install, live simple/complex mode switching, and a model tree for oh-my-opencode agents.",
+  "type": "module",
+  "bin": {
+    "maliv": "bin/maliv.mjs"
+  },
+  "main": "src/plugin.js",
+  "exports": {
+    ".": "./src/plugin.js",
+    "./plugin": "./src/plugin.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "skills",
+    "README.md",
+    "LICENSE",
+    "THIRD-PARTY-NOTICES.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node test/core.test.mjs"
+  },
+  "keywords": [
+    "opencode",
+    "oh-my-opencode",
+    "plugin",
+    "tui",
+    "ai-agents",
+    "model-switcher"
+  ],
+  "author": "Keshav Sharma",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Keshav1926/maliv-code.git"
+  },
+  "homepage": "https://github.com/Keshav1926/maliv-code#readme",
+  "bugs": {
+    "url": "https://github.com/Keshav1926/maliv-code/issues"
+  },
+  "license": "MIT"
+}
