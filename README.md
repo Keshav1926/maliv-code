@@ -52,6 +52,10 @@ Inside opencode:
 - `/model` — the model tree (below)
 - `/maliv-mode` — switch simple ⇄ complex (relaunches, same session)
 
+The home screen shows a **MALIV** wordmark, and the launcher prints a clean
+`▸ maliv` line on start and on exit (with the exact `maliv -c` / `maliv -s <id>`
+resume commands).
+
 ## The model tree (`/model`)
 
 ```

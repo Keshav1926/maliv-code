@@ -1,6 +1,6 @@
 {
   "name": "maliv-code",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A control layer for opencode: one-command install, live simple/complex mode switching, and a model tree for oh-my-opencode agents.",
   "type": "module",
   "bin": {

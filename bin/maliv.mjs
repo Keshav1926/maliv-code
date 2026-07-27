@@ -18,19 +18,19 @@ import { setMode, currentMode } from "../src/config.js";
 import { readNextMode, readNextSession, clearNextMode } from "../src/core.js";
 import { runSetup } from "../src/setup.js";
 
-const C = { reset: "\x1b[0m", cyan: "\x1b[36m", dim: "\x1b[2m", bold: "\x1b[1m", green: "\x1b[32m" };
+const C = {
+  reset: "\x1b[0m", dim: "\x1b[2m", bold: "\x1b[1m", cyan: "\x1b[36m",
+  violet: "\x1b[38;2;124;58;237m", // #7c3aed
+  white: "\x1b[97m",
+};
 let VERSION = "0.1.0";
 try { VERSION = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).version || VERSION; } catch {}
 
+// One clean line before launch — the big MALIV wordmark lives INSIDE the TUI
+// (a multi-line terminal banner just gets wiped by opencode's full-screen redraw).
 function banner(mode, resuming) {
-  const l = [
-    "",
-    `${C.cyan}${C.bold}  ███  maliv-code${C.reset} ${C.dim}v${VERSION}${C.reset}`,
-    `${C.dim}  a control layer for opencode${C.reset}`,
-    `${C.cyan}  ▸${C.reset} ${mode} mode${resuming ? `${C.dim} · resuming session${C.reset}` : ""}`,
-    "",
-  ];
-  process.stdout.write(l.join("\n") + "\n");
+  const { reset: R, violet, white } = C;
+  process.stdout.write(`${violet}▸ maliv${R}${white} · ${mode} mode${resuming ? " · resuming session" : ""}${R}\n`);
 }
 
 function help() {
@@ -45,6 +45,15 @@ function help() {
 
 function runOpencode(args) {
   return spawnSync("opencode", args, { stdio: "inherit", shell: process.platform === "win32" }).status ?? 0;
+}
+
+// Newest session id (the one just used) — `opencode session list` is newest-first.
+function lastSessionId() {
+  try {
+    const r = spawnSync("opencode", ["session", "list"], { encoding: "utf8", shell: process.platform === "win32", timeout: 2500 });
+    const m = (r.stdout || "").match(/ses_[A-Za-z0-9]+/);
+    return m ? m[0] : null;
+  } catch { return null; }
 }
 
 async function main() {
@@ -90,6 +99,15 @@ async function main() {
     }
     break;
   }
+
+  // maliv-branded exit hint — the RIGHT resume commands (opencode prints its own
+  // "opencode -s ..." above; these are the maliv equivalents that actually work).
+  const { white, reset, violet } = C;
+  const id = lastSessionId();
+  const sCmd = id ? `maliv -s ${id}` : "maliv -s <id>";
+  process.stdout.write(
+    `\n${violet}▸ maliv${reset}${white} · resume: maliv -c  ·  ${sCmd}  ·  new: maliv${reset}\n`,
+  );
 }
 
 main().catch((e) => { process.stderr.write(`maliv error: ${String(e?.message || e)}\n`); process.exit(1); });

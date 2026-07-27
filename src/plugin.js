@@ -14,6 +14,7 @@ import {
   setMainModel, currentMainModel, isMainAgent,
   KNOWN_CATEGORIES, MAIN_AGENTS, SUB_AGENTS,
 } from "./core.js";
+import { registerLogo } from "./logo.js";
 
 function listModels(api) {
   const out = [];
@@ -206,6 +207,7 @@ const MalivTui = async (api) => {
       { title: "maliv · set model", value: "maliv.model", description: "set model by level (main / all / groups / agent / tier)", category: "maliv-code", slash: { name: "model", aliases: ["malivmodel"] }, onSelect: () => openLevelPicker(api) },
       { title: "maliv · switch mode", value: "maliv.mode", description: "complex <-> simple (relaunch, same session)", category: "maliv-code", slash: { name: "maliv-mode", aliases: ["malivmode"] }, onSelect: () => openModeMenu(api) },
     ]);
+    registerLogo(api); // v2 — MALIV wordmark in home_logo (self-guarded, test-constructed)
   } catch (e) {
     try { api.ui.toast({ message: `maliv-code init failed: ${String(e?.message || e)}`, variant: "error" }); } catch {}
   }
