@@ -10,6 +10,8 @@ two things effortless:
 > them from their official sources under their own licenses. All credit for those
 > projects belongs to their authors (see [Credits](#credits)).
 
+<img width="1536" height="1024" alt="maliv-code" src="https://github.com/user-attachments/assets/5cc36d79-37d0-4085-b1ed-22084e2e46ac" />
+
 ## Install
 
 ```sh
